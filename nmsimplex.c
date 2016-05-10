@@ -246,6 +246,9 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
 	 10/31/97 - modified to account for ALL vertices. 
       */
       else {
+#ifdef DEBUG
+	printf("DEBUG: contraction not successful\n");
+#endif
 	for (row=0;row<=n;row++) {
 	  if (row != vs) {
 	    for (j=0;j<=n-1;j++) {
