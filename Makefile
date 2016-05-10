@@ -20,6 +20,5 @@ testfun: testfun.o nmsimplex.o
 maxpower: maxpower.o nmsimplex.o
 	${CC} ${CFLAGS} -o $@ maxpower.c nmsimplex.o ${LIBS}
 
-
 clean:
-		rm -f ./*.o ${PROGS}
+	rm -f ./*.o ${PROGS}
