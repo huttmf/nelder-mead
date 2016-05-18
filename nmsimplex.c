@@ -247,18 +247,6 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
 	v[vg][j] = vr[j];
       }
       f[vg] = fr;
-
-      /*
-	for (j=0;j<=n-1;j++) {
-	v[vg][j] = v[vh][j];
-	}
-	f[vg] = f[vh];
-
-	for (j=0;j<=n-1;j++) {
-	v[vh][j] = vr[j];
-	}
-	f[vh] = fr;
-      */
     }
 		
     /* investigate a step further in this direction */
@@ -273,9 +261,11 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
       fe = objfunc(ve);
       k++;
 			
-      /* by making fe < fr as opposed to fe < f[vs], 			   
+      /* 
+	 by making fe < fr as opposed to fe < f[vs], 			   
 	 Rosenbrocks function takes 63 iterations as opposed 
-	 to 64 when using double variables. */
+	 to 64 when using double variables. 
+      */
 			
       if (fe < fr) {
 	for (j=0;j<=n-1;j++) {
@@ -390,12 +380,7 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
   /* end main loop of the minimization */
 	
   /* find the index of the smallest value */
-  vs=0;
-  for (j=0;j<=n;j++) {
-    if (f[j] < f[vs]) {
-      vs = j;
-    }
-  }
+  vs = vs_index(f,0,n);
 	
   printf("The minimum was found at\n"); 
   for (j=0;j<n;j++) {
