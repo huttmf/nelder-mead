@@ -41,6 +41,61 @@
 
 #include "nmsimplex.h"
 
+void initialize_simplex(double **v, double start[], double scale, int n)
+{
+  /* create the initial simplex */
+  /* assume one of the vertices is 0,0 */
+
+  double pn,qn;   /* values used to create initial simplex */
+  int i,j;
+	
+  pn = scale*(sqrt(n+1)-1+n)/(n*sqrt(2));
+  qn = scale*(sqrt(n+1)-1)/(n*sqrt(2));
+	
+  for (i=0;i<n;i++) {
+    v[0][i] = start[i];
+  }
+	
+  for (i=1;i<=n;i++) {
+    for (j=0;j<n;j++) {
+      if (i-1 == j) {
+	v[i][j] = pn + start[j];
+      }
+      else {
+	v[i][j] = qn + start[j];
+      }
+    }
+  }
+
+
+}
+
+void print_initial_simplex(double **v, double *f, int n)
+{
+  /* print out the initial values */
+  int i,j;
+  
+  printf("Initial Values\n");
+  for (j=0;j<=n;j++) {
+    for (i=0;i<n;i++) {
+      printf("%f %f\n",v[j][i],f[j]);
+    }
+  }
+}
+
+void print_iteration(double **v, double *f, int n, int itr)
+{
+  /* print out the value at each iteration */
+  int i,j;
+  
+  printf("Iteration %d\n",itr);
+  for (j=0;j<=n;j++) {
+    for (i=0;i<n;i++) {
+      printf("%f %f\n",v[j][i],f[j]);
+    }
+  }
+}
+
 double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON, double scale, void (*constrain)(double[],int n))
 {
 	
@@ -53,7 +108,7 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
   int itr;	  /* track the number of iterations */
 	
   double **v;     /* holds vertices of simplex */
-  double pn,qn;   /* values used to create initial simplex */
+  //double pn,qn;   /* values used to create initial simplex */
   double *f;      /* value of function at each vertex */
   double fr;      /* value of function at reflection point */
   double fe;      /* value of function at expansion point */
@@ -83,27 +138,13 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
 	
   /* create the initial simplex */
   /* assume one of the vertices is 0,0 */
-	
-  pn = scale*(sqrt(n+1)-1+n)/(n*sqrt(2));
-  qn = scale*(sqrt(n+1)-1)/(n*sqrt(2));
-	
-  for (i=0;i<n;i++) {
-    v[0][i] = start[i];
-  }
-	
-  for (i=1;i<=n;i++) {
-    for (j=0;j<n;j++) {
-      if (i-1 == j) {
-	v[i][j] = pn + start[j];
-      }
-      else {
-	v[i][j] = qn + start[j];
-      }
-    }
-  }
-	
+
+  initialize_simplex(v,start,scale,n);
+
   if (constrain != NULL) {
-    constrain(v[j],n);
+    for (j=0;j<=n;j++) {
+      constrain(v[j],n);
+    }
   } 
   /* find the initial function values */
   for (j=0;j<=n;j++) {
@@ -113,14 +154,8 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
   k = n+1;
 	
   /* print out the initial values */
-  printf("Initial Values\n");
-  for (j=0;j<=n;j++) {
-    for (i=0;i<n;i++) {
-      printf("%f %f\n",v[j][i],f[j]);
-    }
-  }
-	
-	
+  print_initial_simplex(v,f,n);
+
   /* begin the main loop of the minimization */
   for (itr=1;itr<=MAX_IT;itr++) {     
     /* find the index of the largest value */
@@ -256,6 +291,34 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
 	    }
 	  }
 	}
+
+	/*
+	  for (j=0;j<=n;j++) {
+	  f[j] = objfunc(v[j]);
+	  }
+
+	  vg=0;
+	  for (j=0;j<=n;j++) {
+	  if (f[j] > f[vg]) {
+	  vg = j;
+	  }
+	  }
+	
+	  vs=0;
+	  for (j=0;j<=n;j++) {
+	  if (f[j] < f[vs]) {
+	  vs = j;
+	  }
+	  }
+	
+	  vh=vs;
+	  for (j=0;j<=n;j++) {
+	  if (f[j] > f[vh] && f[j] < f[vg]) {
+	  vh = j;
+	  }
+	  }
+	*/
+	
 	if (constrain != NULL) {
           constrain(v[vg],n);
         }
@@ -272,12 +335,7 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
     }
 		
     /* print out the value at each iteration */
-    printf("Iteration %d\n",itr);
-    for (j=0;j<=n;j++) {
-      for (i=0;i<n;i++) {
-	printf("%f %f\n",v[j][i],f[j]);
-      }
-    }
+    print_iteration(v,f,n,itr);
 		
     /* test for convergence */
     fsum = 0.0;

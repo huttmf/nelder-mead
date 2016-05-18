@@ -14,7 +14,7 @@
  
 double rosen(double x[])
 {
-  return (100*(x[1]-x[0]*x[0])*(x[1]-x[0]*x[0])+(1.0-x[0])*(1.0-x[0]));
+  return (100*((x[1]-x[0]*x[0])*(x[1]-x[0]*x[0]))+(1.0-x[0])*(1.0-x[0]));
 }
 
 double round2(double num, int precision)

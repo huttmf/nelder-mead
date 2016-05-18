@@ -17,6 +17,9 @@ nmsimplex: nmsimplex.c
 testfun: testfun.o nmsimplex.o
 	${CC} ${CFLAGS} -o $@ testfun.c nmsimplex.o ${LIBS}
 
+testfun2: testfun2.o nmsimplex.o
+	${CC} ${CFLAGS} -o $@ testfun2.c nmsimplex.o ${LIBS}
+
 maxpower: maxpower.o nmsimplex.o
 	${CC} ${CFLAGS} -o $@ maxpower.c nmsimplex.o ${LIBS}
 
