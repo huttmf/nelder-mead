@@ -6,7 +6,7 @@
  *
  * An implementation of the Nelder-Mead simplex method.
  *
- * Copyright (c) 1997-2011 <Michael F. Hutt>
+ * Copyright (c) 1997-present <Michael F. Hutt>
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -70,6 +70,7 @@ void initialize_simplex(double **v, double start[], double scale, int n)
 
 }
 
+
 void print_initial_simplex(double **v, double *f, int n)
 {
   /* print out the initial values */
@@ -82,6 +83,7 @@ void print_initial_simplex(double **v, double *f, int n)
     }
   }
 }
+
 
 void print_iteration(double **v, double *f, int n, int itr)
 {
@@ -96,6 +98,67 @@ void print_iteration(double **v, double *f, int n, int itr)
   }
 }
 
+
+int vg_index(double *f, int vg, int n)
+{
+  /* find the index of the largest value */
+  int j;
+  
+  for (j=0;j<=n;j++) {
+    if (f[j] > f[vg]) {
+      vg = j;
+    }
+  }
+  return vg;
+}
+
+
+int vs_index(double *f, int vs, int n)
+{
+  /* find the index of the smallest value */
+  int j;
+    
+  for (j=0;j<=n;j++) {
+    if (f[j] < f[vs]) {
+      vs = j;
+    }
+  }
+  return vs;
+}
+
+
+int vh_index(double *f, int vh, int vg, int n)
+{
+  /* find the index of the second largest value */
+  int j;
+  
+  for (j=0;j<=n;j++) {
+    if (f[j] > f[vh] && f[j] < f[vg]) {
+      vh = j;
+    }
+  }
+  return vh;
+}
+
+
+/* calculate the centroid */
+void centroid(double *vm, double **v, int n, int vg)
+{
+  int j,m;
+  double cent;
+  
+    for (j=0;j<=n-1;j++) {
+      cent=0.0;
+      for (m=0;m<=n;m++) {
+	if (m!=vg) {
+	  cent += v[m][j];
+	}
+      }
+      vm[j] = cent/n;
+    }
+}
+
+
 double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON, double scale, void (*constrain)(double[],int n))
 {
 	
@@ -103,12 +166,11 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
   int vh;         /* vertex with next smallest value */
   int vg;         /* vertex with largest value */
 	
-  int i,j,m,row;
+  int i,j,row;
   int k;   	  /* track the number of function evaluations */
   int itr;	  /* track the number of iterations */
 	
   double **v;     /* holds vertices of simplex */
-  //double pn,qn;   /* values used to create initial simplex */
   double *f;      /* value of function at each vertex */
   double fr;      /* value of function at reflection point */
   double fe;      /* value of function at expansion point */
@@ -119,7 +181,7 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
   double *vm;     /* centroid - coordinates */
   double min;
 	
-  double fsum,favg,s,cent;
+  double fsum,favg,s;
 	
   /* dynamically allocate arrays */
 	
@@ -137,20 +199,19 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
   }
 	
   /* create the initial simplex */
-  /* assume one of the vertices is 0,0 */
-
   initialize_simplex(v,start,scale,n);
 
+  /* impose constraints */
   if (constrain != NULL) {
     for (j=0;j<=n;j++) {
       constrain(v[j],n);
     }
-  } 
+  }
+  
   /* find the initial function values */
   for (j=0;j<=n;j++) {
     f[j] = objfunc(v[j]);
   }
-	
   k = n+1;
 	
   /* print out the initial values */
@@ -159,30 +220,41 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
   /* begin the main loop of the minimization */
   for (itr=1;itr<=MAX_IT;itr++) {     
     /* find the index of the largest value */
+    vg = vg_index(f,0,n);
+    /*
     vg=0;
     for (j=0;j<=n;j++) {
       if (f[j] > f[vg]) {
 	vg = j;
       }
     }
+    */
 		
     /* find the index of the smallest value */
-    vs=0;
-    for (j=0;j<=n;j++) {
+    vs = vs_index(f,0,n);
+    /*
+      vs=0;
+      for (j=0;j<=n;j++) {
       if (f[j] < f[vs]) {
-	vs = j;
+      vs = j;
       }
-    }
+      }
+    */
 		
     /* find the index of the second largest value */
-    vh=vs;
-    for (j=0;j<=n;j++) {
+    vh = vh_index(f,vs,vg,n);
+    /*
+      vh=vs;
+      for (j=0;j<=n;j++) {
       if (f[j] > f[vh] && f[j] < f[vg]) {
-	vh = j;
+      vh = j;
       }
-    }
+      }
+    */
 		
     /* calculate the centroid */
+    centroid(vm,v,n,vg);
+    /*
     for (j=0;j<=n-1;j++) {
       cent=0.0;
       for (m=0;m<=n;m++) {
@@ -192,6 +264,7 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
       }
       vm[j] = cent/n;
     }
+    */
 		
     /* reflect vg to new vertex vr */
     for (j=0;j<=n-1;j++) {
