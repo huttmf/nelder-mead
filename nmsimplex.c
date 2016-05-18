@@ -2,7 +2,7 @@
  * Program: nmsimplex.c
  * Author : Michael F. Hutt
  * http://www.mikehutt.com
- * 11/3/97
+ * Nov. 3, 1997
  *
  * An implementation of the Nelder-Mead simplex method.
  *
@@ -230,6 +230,7 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
 		
     /* calculate the centroid */
     centroid(vm,v,n,vg);
+
     /* reflect vg to new vertex vr */
     for (j=0;j<=n-1;j++) {
       /*vr[j] = (1+ALPHA)*vm[j] - ALPHA*v[vg][j];*/
@@ -246,6 +247,18 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
 	v[vg][j] = vr[j];
       }
       f[vg] = fr;
+
+      /*
+	for (j=0;j<=n-1;j++) {
+	v[vg][j] = v[vh][j];
+	}
+	f[vg] = f[vh];
+
+	for (j=0;j<=n-1;j++) {
+	v[vh][j] = vr[j];
+	}
+	f[vh] = fr;
+      */
     }
 		
     /* investigate a step further in this direction */
@@ -312,15 +325,15 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
 	}
 	f[vg] = fc;
       }
-      /* at this point the contraction is not successful,
-	 we must halve the distance from vs to all the 
-	 vertices of the simplex and then continue.
-	 10/31/97 - modified to account for ALL vertices. 
-      */
+
       else {
-#ifdef DEBUG
-	printf("DEBUG: contraction not successful\n");
-#endif
+	/* 
+	   at this point the contraction is not successful,
+	   we must halve the distance from vs to all the 
+	   vertices of the simplex and then continue.
+	   1997-10-31 - modified to account for ALL vertices. 
+	*/
+	
 	for (row=0;row<=n;row++) {
 	  if (row != vs) {
 	    for (j=0;j<=n-1;j++) {
@@ -329,33 +342,20 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
 	  }
 	}
 
-	/*
-	  for (j=0;j<=n;j++) {
+	/* reveluate all the vertices */
+	for (j=0;j<=n;j++) {
 	  f[j] = objfunc(v[j]);
-	  }
+	}
+	
+	/* find the index of the largest value */
+	vg = vg_index(f,0,n);
+	
+	/* find the index of the smallest value */
+	vs = vs_index(f,0,n);
+	
+	/* find the index of the second largest value */
+	vh = vh_index(f,vs,vg,n);
 
-	  vg=0;
-	  for (j=0;j<=n;j++) {
-	  if (f[j] > f[vg]) {
-	  vg = j;
-	  }
-	  }
-	
-	  vs=0;
-	  for (j=0;j<=n;j++) {
-	  if (f[j] < f[vs]) {
-	  vs = j;
-	  }
-	  }
-	
-	  vh=vs;
-	  for (j=0;j<=n;j++) {
-	  if (f[j] > f[vh] && f[j] < f[vg]) {
-	  vh = j;
-	  }
-	  }
-	*/
-	
 	if (constrain != NULL) {
           constrain(v[vg],n);
         }
