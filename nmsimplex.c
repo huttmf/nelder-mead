@@ -41,9 +41,9 @@
 
 #include "nmsimplex.h"
 
+/* create the initial simplex */
 void initialize_simplex(double **v, double start[], double scale, int n)
 {
-  /* create the initial simplex */
   /* assume one of the vertices is 0,0 */
 
   double pn,qn;   /* values used to create initial simplex */
@@ -71,9 +71,9 @@ void initialize_simplex(double **v, double start[], double scale, int n)
 }
 
 
+/* print out the initial values */
 void print_initial_simplex(double **v, double *f, int n)
 {
-  /* print out the initial values */
   int i,j;
   
   printf("Initial Values\n");
@@ -85,9 +85,9 @@ void print_initial_simplex(double **v, double *f, int n)
 }
 
 
+/* print out the value at each iteration */
 void print_iteration(double **v, double *f, int n, int itr)
 {
-  /* print out the value at each iteration */
   int i,j;
   
   printf("Iteration %d\n",itr);
@@ -99,9 +99,9 @@ void print_iteration(double **v, double *f, int n, int itr)
 }
 
 
+/* find the index of the largest value */
 int vg_index(double *f, int vg, int n)
 {
-  /* find the index of the largest value */
   int j;
   
   for (j=0;j<=n;j++) {
@@ -113,9 +113,9 @@ int vg_index(double *f, int vg, int n)
 }
 
 
+/* find the index of the smallest value */
 int vs_index(double *f, int vs, int n)
 {
-  /* find the index of the smallest value */
   int j;
     
   for (j=0;j<=n;j++) {
@@ -127,9 +127,9 @@ int vs_index(double *f, int vs, int n)
 }
 
 
+/* find the index of the second largest value */
 int vh_index(double *f, int vh, int vg, int n)
 {
-  /* find the index of the second largest value */
   int j;
   
   for (j=0;j<=n;j++) {
@@ -147,15 +147,15 @@ void centroid(double *vm, double **v, int n, int vg)
   int j,m;
   double cent;
   
-    for (j=0;j<=n-1;j++) {
-      cent=0.0;
-      for (m=0;m<=n;m++) {
-	if (m!=vg) {
-	  cent += v[m][j];
-	}
+  for (j=0;j<=n-1;j++) {
+    cent=0.0;
+    for (m=0;m<=n;m++) {
+      if (m!=vg) {
+	cent += v[m][j];
       }
-      vm[j] = cent/n;
     }
+    vm[j] = cent/n;
+  }
 }
 
 
@@ -221,51 +221,15 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
   for (itr=1;itr<=MAX_IT;itr++) {     
     /* find the index of the largest value */
     vg = vg_index(f,0,n);
-    /*
-    vg=0;
-    for (j=0;j<=n;j++) {
-      if (f[j] > f[vg]) {
-	vg = j;
-      }
-    }
-    */
-		
+
     /* find the index of the smallest value */
     vs = vs_index(f,0,n);
-    /*
-      vs=0;
-      for (j=0;j<=n;j++) {
-      if (f[j] < f[vs]) {
-      vs = j;
-      }
-      }
-    */
 		
     /* find the index of the second largest value */
     vh = vh_index(f,vs,vg,n);
-    /*
-      vh=vs;
-      for (j=0;j<=n;j++) {
-      if (f[j] > f[vh] && f[j] < f[vg]) {
-      vh = j;
-      }
-      }
-    */
 		
     /* calculate the centroid */
     centroid(vm,v,n,vg);
-    /*
-    for (j=0;j<=n-1;j++) {
-      cent=0.0;
-      for (m=0;m<=n;m++) {
-	if (m!=vg) {
-	  cent += v[m][j];
-	}
-      }
-      vm[j] = cent/n;
-    }
-    */
-		
     /* reflect vg to new vertex vr */
     for (j=0;j<=n-1;j++) {
       /*vr[j] = (1+ALPHA)*vm[j] - ALPHA*v[vg][j];*/
