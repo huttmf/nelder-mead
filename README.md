@@ -1,6 +1,6 @@
 ## Synopsis
 
-An implementation of the Nelder-Mead simplex method.
+An implementation of the Nelder-Mead simplex method.  
 Version 1.0
 
 ## Code Example
@@ -40,12 +40,15 @@ useful for non-linear optimization problems. I was researching
 optimization of antenna arrarys at one point and implemented several
 versions of the Nelder-Mead algorithm.
 
+Reference  
+D. J. Wilde and C. S. Beightler, Foundations of Optimization. Englewood Cliffs, N.J., Prentice-Hall, 1967. 
+
 ## Installation
 
 make
 
 ## License
 
-Copyright (c) 1999-present Michael F. Hutt
+Copyright (c) 1999-present Michael F. Hutt  
 Released under the MIT License
 
