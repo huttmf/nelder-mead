@@ -1,19 +1,33 @@
 ## Synopsis
 
 An implementation of the Nelder-Mead simplex method.  
-Version 1.0
+Version 1.1
 
 ## Code Example
 
-See testfun and maxpower.
+See rosenbrock and maxpower.
 
-The testfun example evaluates the Rosenbrock function.
+The rosenbrock example evaluates the Rosenbrock function.
 
-    The minimum was found at
-    1.000000e+00
-    1.000000e+00
+In the first case a starting point of (-1.2,1.0) was specified.
+    Initial Values
+    -1.20, 1.00, value 24.20
+    -0.23, 1.26, value 147.22
+    -0.94, 1.97, value 121.79
     123 Function Evaluations
     61 Iterations through program
+    The minimum was found at
+    1.00, 1.00, value 0.00
+
+In the second case no starting point was specified.
+    Initial Values
+    0.00, 0.00, value 1.00
+    0.97, 0.26, value 46.36
+    0.26, 0.97, value 81.98
+    102 Function Evaluations
+    50 Iterations through program
+    The minimum was found at
+    1.00, 1.00, value 0.00
 
 The maxpower program is an example of using Nelder-Mead for a one
 dimensional optimization problem. The problem is to find the value of

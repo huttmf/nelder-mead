@@ -48,9 +48,11 @@ int main()
 
   /* run optimization with a starting point */
   min=simplex(rosen,start,2,1.0e-4,1,my_constraints);
+  printf("The minimum was found at\n"); 
   for (i=0;i<2;i++) {
-    printf("%f:%f\n",start[i],min);
+    printf("%0.2f, ",start[i]);
   }
+  printf("value %0.2f\n",min);
 
   /* 
      use default starting point of:
@@ -60,8 +62,11 @@ int main()
   */
 
   min=simplex(rosen,start_null,2,1.0e-4,1,my_constraints);
+  printf("The minimum was found at\n"); 
   for (i=0;i<2;i++) {
-    printf("%f:%f\n",start_null[i],min);
+    printf("%0.2f, ",start_null[i]);
   }
+  printf("value %0.2f\n",min);
+  
   return 0;
 }
