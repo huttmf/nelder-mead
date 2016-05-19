@@ -50,6 +50,10 @@ void my_constraints(double x[], int n);
 void initialize_simplex(double **v, double start[], double scale, int n);
 void print_initial_simplex(double **v, double *f, int n);
 void print_iteration(double **v, double *f, int n, int itr);
+int vg_index(double *f, int vg, int n);
+int vs_index(double *f, int vs, int n);
+int vh_index(double *f, int vh, int vg, int n);
+void centroid(double *vm, double **v, int n, int vg);
 double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON, double scale, void (*constrain)(double[],int n));
 
 #endif
