@@ -19,8 +19,11 @@ double rosen(double x[])
 
 double round2(double num, int precision)
 {
-  double rnum;
+  double rnum = 0.0;
   int tnum;
+
+  if (num == 0)
+    return rnum;
 
   rnum = num*pow(10,precision);
   tnum = (int)(rnum < 0 ? rnum-0.5 : rnum + 0.5);
