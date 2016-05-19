@@ -1,9 +1,9 @@
 /* 
- * Program: testfun.c
+ * Program: rosenbrock.c
  * Author: Michael F. Hutt
  * http://www.mikehutt.com
- * Mar. 1, 2011
- * gcc -Wall -o testfun testfun.c nmsimplex.c -DMACOSX
+ * May 19, 2016
+ * gcc -Wall -o rosenbrock rosenbrock.c nmsimplex.c -DMACOSX
  * test function for nmsimplex
  *
  */
@@ -46,15 +46,27 @@ int main()
   double min;
   int i;
 
+  /* run optimization with a starting point */
   min=simplex(rosen,start,2,1.0e-4,1,my_constraints);
+  printf("The minimum was found at\n"); 
   for (i=0;i<2;i++) {
-    printf("%f:%f\n",start[i],min);
+    printf("%0.2f, ",start[i]);
   }
-  
-  min=simplex(rosen,start_null,2,1.0e-4,1,my_constraints);
+  printf("value %0.2f\n\n",min);
 
+  /* 
+     use default starting point of:
+     0,0
+     0.965,0.259
+     0.259,0.965
+  */
+
+  min=simplex(rosen,start_null,2,1.0e-4,1,my_constraints);
+  printf("The minimum was found at\n"); 
   for (i=0;i<2;i++) {
-    printf("%f:%f\n",start_null[i],min);
+    printf("%0.2f, ",start_null[i]);
   }
+  printf("value %0.2f\n",min);
+  
   return 0;
 }

@@ -7,18 +7,18 @@ CFLAGS= -Wall
 
 LIBS= -lm
 
-PROGS = testfun maxpower
+PROGS = rosenbrock maxpower
 
-all: testfun maxpower
+all: rosenbrock maxpower
 
 nmsimplex: nmsimplex.c
 	${CC} ${CFLAGS} -c nmsimplex.o ${LIBS}
 
-testfun: testfun.o nmsimplex.o
-	${CC} ${CFLAGS} -o $@ testfun.c nmsimplex.o ${LIBS}
+rosenbrock: rosenbrock.o nmsimplex.o
+	${CC} ${CFLAGS} -o $@ rosenbrock.c nmsimplex.o ${LIBS}
 
-testfun2: testfun2.o nmsimplex.o
-	${CC} ${CFLAGS} -o $@ testfun2.c nmsimplex.o ${LIBS}
+rosenbrock2: rosenbrock2.o nmsimplex.o
+	${CC} ${CFLAGS} -o $@ rosenbrock2.c nmsimplex.o ${LIBS}
 
 maxpower: maxpower.o nmsimplex.o
 	${CC} ${CFLAGS} -o $@ maxpower.c nmsimplex.o ${LIBS}

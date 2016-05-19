@@ -1,4 +1,7 @@
-### 2016-05-18
+### 2016-05-19 v1.1
+	* Added the capability to have the initial simplex created without specifying a starting point.
+
+### 2016-05-18 v1.0
 	* Re-evaluate all vertices after an unsuccessful contraction.
 	* Initial release to github, v1.0
 
