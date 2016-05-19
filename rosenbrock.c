@@ -1,9 +1,9 @@
 /* 
- * Program: testfun.c
+ * Program: rosenbrock.c
  * Author: Michael F. Hutt
  * http://www.mikehutt.com
- * Mar. 1, 2011
- * gcc -Wall -o testfun testfun.c nmsimplex.c -DMACOSX
+ * May 19, 2016
+ * gcc -Wall -o rosenbrock rosenbrock.c nmsimplex.c -DMACOSX
  * test function for nmsimplex
  *
  */
@@ -19,8 +19,11 @@ double rosen(double x[])
 
 double round2(double num, int precision)
 {
-  double rnum;
+  double rnum = 0.0;
   int tnum;
+
+  if (num == 0.0)
+    return num;
 
   rnum = num*pow(10,precision);
   tnum = (int)(rnum < 0 ? rnum-0.5 : rnum + 0.5);
@@ -42,14 +45,31 @@ void my_constraints(double x[], int n)
 int main()
 {
   double start[] = {-1.2,1.0};
+  double start_null[] = {0.0,0.0};
   double min;
   int i;
 
+  /* run optimization with a starting point */
   min=simplex(rosen,start,2,1.0e-4,1,my_constraints);
-  //min=simplex(rosen,start,2,1.0e-4,1,NULL);
-
+  printf("The minimum was found at\n"); 
   for (i=0;i<2;i++) {
-    printf("%f\n",start[i]);
+    printf("%0.2f, ",start[i]);
   }
+  printf("value %0.2f\n\n",min);
+
+  /* 
+     use default starting point of:
+     0,0
+     0.965,0.259
+     0.259,0.965
+  */
+
+  min=simplex(rosen,start_null,2,1.0e-4,1,my_constraints);
+  printf("The minimum was found at\n"); 
+  for (i=0;i<2;i++) {
+    printf("%0.2f, ",start_null[i]);
+  }
+  printf("value %0.2f\n",min);
+  
   return 0;
 }

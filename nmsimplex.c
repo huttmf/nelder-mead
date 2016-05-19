@@ -16,14 +16,12 @@
 /* create the initial simplex */
 void initialize_simplex(double **v, double start[], double scale, int n)
 {
-  /* assume one of the vertices is 0,0 */
-
   double pn,qn;   /* values used to create initial simplex */
   int i,j;
 	
   pn = scale*(sqrt(n+1)-1+n)/(n*sqrt(2));
   qn = scale*(sqrt(n+1)-1)/(n*sqrt(2));
-	
+
   for (i=0;i<n;i++) {
     v[0][i] = start[i];
   }
@@ -38,8 +36,6 @@ void initialize_simplex(double **v, double start[], double scale, int n)
       }
     }
   }
-
-
 }
 
 
@@ -51,8 +47,9 @@ void print_initial_simplex(double **v, double *f, int n)
   printf("Initial Values\n");
   for (j=0;j<=n;j++) {
     for (i=0;i<n;i++) {
-      printf("%f %f\n",v[j][i],f[j]);
+      printf("%0.2f, ",v[j][i]);
     }
+    printf("value %0.2f\n",f[j]);
   }
 }
 
@@ -334,7 +331,7 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
     }
 		
     /* print out the value at each iteration */
-    print_iteration(v,f,n,itr);
+    /*print_iteration(v,f,n,itr);*/
 		
     /* test for convergence */
     fsum = 0.0;
@@ -354,9 +351,9 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
   /* find the index of the smallest value */
   vs = vs_index(f,0,n);
 	
-  printf("The minimum was found at\n"); 
+  /*printf("The minimum was found at\n"); */
   for (j=0;j<n;j++) {
-    printf("%e\n",v[vs][j]);
+    /*printf("%e\n",v[vs][j]);*/
     start[j] = v[vs][j];
   }
   min=objfunc(v[vs]);
