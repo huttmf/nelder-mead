@@ -1,0 +1,56 @@
+An implementation of the Nelder-Mead simplex method.
+
+Version 1.0
+
+Copyright (c) 1997-present <Michael F. Hutt>
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Reference
+D. J. Wilde and C. S. Beightler, Foundations of Optimization. Englewood Cliffs, N.J., Prentice-Hall, 1967. 
+
+The Nelder-Mead Simplex Method is direct search algorithm that's
+useful for non-linear optimization problems. I was researching
+optimization of antenna arrarys at one point and implemented several
+versions of the Nelder-Mead algorithm.
+
+The testfun example evaluates the Rosenbrock function.
+
+The minimum was found at
+1.000000e+00
+1.000000e+00
+123 Function Evaluations
+61 Iterations through program
+
+The maxpower program is an example of using Nelder-Mead for a one
+dimensional optimization problem. The problem is to find the value of
+a load resistor that will allow maximum power to be delivered to the
+load. For this example I used a simple voltage divider circuit
+consisting of a single 9V source with two resistors in series (1000
+ohm and 470 ohm) with the output taken across the 470 ohm
+resistor. From the Thevenin equivalent circuit we know that the
+optimium load resistor value for max power transfer should be 319.73
+ohms. The source code for this problem can be found here. The program
+produces the following output starting with an initial guess of RL=100
+ohms:
+
+RL:320.000000 P:0.006474
+29 Function Evaluations
+13 Iterations through program

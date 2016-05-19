@@ -42,6 +42,7 @@
  * Re-evaluate all vertices after an unsuccessful contraction.
  */
 
+
 #include "nmsimplex.h"
 
 /* create the initial simplex */
