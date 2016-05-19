@@ -22,37 +22,17 @@ void initialize_simplex(double **v, double start[], double scale, int n)
   pn = scale*(sqrt(n+1)-1+n)/(n*sqrt(2));
   qn = scale*(sqrt(n+1)-1)/(n*sqrt(2));
 
-  if (start == NULL) {
-    /* assume one of the vertices is 0,0 */
-    for (i=0;i<n;i++) {
-      start[i] = 0.0;
-      v[0][i] = 0.0;
-    }
-	
-    for (i=1;i<=n;i++) {
-      for (j=0;j<n;j++) {
-	if (i-1 == j) {
-	  v[i][j] = pn;
-	}
-	else {
-	  v[i][j] = qn;
-	}
-      }
-    }
+  for (i=0;i<n;i++) {
+    v[0][i] = start[i];
   }
-  else {
-    for (i=0;i<n;i++) {
-      v[0][i] = start[i];
-    }
 	
-    for (i=1;i<=n;i++) {
-      for (j=0;j<n;j++) {
-	if (i-1 == j) {
-	  v[i][j] = pn + start[j];
-	}
-	else {
-	  v[i][j] = qn + start[j];
-	}
+  for (i=1;i<=n;i++) {
+    for (j=0;j<n;j++) {
+      if (i-1 == j) {
+	v[i][j] = pn + start[j];
+      }
+      else {
+	v[i][j] = qn + start[j];
       }
     }
   }
