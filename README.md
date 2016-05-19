@@ -53,7 +53,7 @@ ohms:
 
 ## Motivation
 
-The Nelder-Mead Simplex Method is direct search algorithm that's
+The Nelder-Mead Simplex Method is a direct search algorithm that's
 useful for non-linear optimization problems. I was researching
 optimization of antenna arrarys at one point and implemented several
 versions of the Nelder-Mead algorithm.
@@ -65,10 +65,11 @@ The pn,qn values used to create the initial simplex are defined by
 (Spendly, Hext, and Himsworth). This creates a simplex with unit edges
 between all vertices. Some implementations just form the initial
 simplex by taking a step in each direction. Since we're talking about
-non-linear optimization, every case will be different. For my
-applications, concerning antenna array optimization, the initial
-simplex with unit edges seems to give the best results. Although it
-does have to be scaled at times depending on the problem.
+non-linear optimization, there is no one initial simplex that is best
+for every case. For my applications, concerning antenna array
+optimization, the initial simplex with unit edges seems to give the
+best results. Although it does have to be scaled at times depending on
+the problem.
 
 ## Installation
 
