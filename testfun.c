@@ -42,14 +42,19 @@ void my_constraints(double x[], int n)
 int main()
 {
   double start[] = {-1.2,1.0};
+  double start_null[2];
   double min;
   int i;
 
   min=simplex(rosen,start,2,1.0e-4,1,my_constraints);
-  //min=simplex(rosen,start,2,1.0e-4,1,NULL);
+  for (i=0;i<2;i++) {
+    printf("%f:%f\n",start[i],min);
+  }
+  
+  min=simplex(rosen,start_null,2,1.0e-4,1,my_constraints);
 
   for (i=0;i<2;i++) {
-    printf("%f\n",start[i]);
+    printf("%f:%f\n",start_null[i],min);
   }
   return 0;
 }

@@ -23,23 +23,39 @@ void initialize_simplex(double **v, double start[], double scale, int n)
 	
   pn = scale*(sqrt(n+1)-1+n)/(n*sqrt(2));
   qn = scale*(sqrt(n+1)-1)/(n*sqrt(2));
+
+  if (start == NULL) {
+    for (i=0;i<n;i++) {
+      v[0][i] = 0.0;
+    }
 	
-  for (i=0;i<n;i++) {
-    v[0][i] = start[i];
-  }
-	
-  for (i=1;i<=n;i++) {
-    for (j=0;j<n;j++) {
-      if (i-1 == j) {
-	v[i][j] = pn + start[j];
-      }
-      else {
-	v[i][j] = qn + start[j];
+    for (i=1;i<=n;i++) {
+      for (j=0;j<n;j++) {
+	if (i-1 == j) {
+	  v[i][j] = pn;
+	}
+	else {
+	  v[i][j] = qn;
+	}
       }
     }
   }
-
-
+  else {
+    for (i=0;i<n;i++) {
+      v[0][i] = start[i];
+    }
+	
+    for (i=1;i<=n;i++) {
+      for (j=0;j<n;j++) {
+	if (i-1 == j) {
+	  v[i][j] = pn + start[j];
+	}
+	else {
+	  v[i][j] = qn + start[j];
+	}
+      }
+    }
+  }
 }
 
 
@@ -334,7 +350,7 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
     }
 		
     /* print out the value at each iteration */
-    print_iteration(v,f,n,itr);
+    /*print_iteration(v,f,n,itr);*/
 		
     /* test for convergence */
     fsum = 0.0;

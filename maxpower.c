@@ -26,51 +26,51 @@
  * 
  */
  
- #include "nmsimplex.h"
- #include <stdio.h>
- #include <math.h>
+#include "nmsimplex.h"
+#include <stdio.h>
+#include <math.h>
  
  
- double objfun(double x[])
- {
-   /* find the power for this value of RL */
-   double Req;
-   double VL;
-   double PL;
-   double Vs = 9.0;
-   double RL = x[0];
+double objfun(double x[])
+{
+  /* find the power for this value of RL */
+  double Req;
+  double VL;
+  double PL;
+  double Vs = 9.0;
+  double RL = x[0];
    
-   Req = 470*RL/(470+RL);
-   VL = Vs*Req/(1000+Req);
-   PL = VL*VL/RL;
-   printf("RL:%f P:%f\n",RL,PL);
-   return -PL; /* nm finds the minimum, so to find the max we return the negative value */
- }
+  Req = 470*RL/(470+RL);
+  VL = Vs*Req/(1000+Req);
+  PL = VL*VL/RL;
+  printf("RL:%f P:%f\n",RL,PL);
+  return -PL; /* nm finds the minimum, so to find the max we return the negative value */
+}
  
- void my_constraints(double x[], int n)
- {
-   // resistance must be positive
-   int i;
-   for (i=0; i<n; i++) {
-     if (x[i] < 0) {
-       x[i] = fabs(x[i]);
-     }
-   }
- }
+void my_constraints(double x[], int n)
+{
+  // resistance must be positive
+  int i;
+  for (i=0; i<n; i++) {
+    if (x[i] < 0) {
+      x[i] = fabs(x[i]);
+    }
+  }
+}
 
 int main()
 {
-	double start[] = {100};
-	double min;
-	int i;
+  double start[] = {100};
+  double min;
+  int i;
   int dim = 1;
   double eps = 1.0e-8;
   double scale = 1.0;
 
-	min=simplex(objfun,start,dim,eps,scale,my_constraints);
+  min=simplex(objfun,start,dim,eps,scale,my_constraints);
 
-	for (i=0; i<dim; i++) {
-		printf("%f\n",start[i]);
-	}
-	return 0;
+  for (i=0; i<dim; i++) {
+    printf("%f:%f\n",start[i],min);
+  }
+  return 0;
 }
