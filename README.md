@@ -40,8 +40,8 @@ useful for non-linear optimization problems. I was researching
 optimization of antenna arrarys at one point and implemented several
 versions of the Nelder-Mead algorithm.
 
-Reference  
-D. J. Wilde and C. S. Beightler, Foundations of Optimization. Englewood Cliffs, N.J., Prentice-Hall, 1967. 
+Reference for the creation of the initial simplex.
+D. J. Wilde and C. S. Beightler, Foundations of Optimization. Englewood Cliffs, N.J., Prentice-Hall, 1967, p. 319
 
 ## Installation
 
