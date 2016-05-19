@@ -23,7 +23,7 @@ double round2(double num, int precision)
   int tnum;
 
   if (num == 0)
-    return rnum;
+    return num;
 
   rnum = num*pow(10,precision);
   tnum = (int)(rnum < 0 ? rnum-0.5 : rnum + 0.5);
@@ -45,7 +45,7 @@ void my_constraints(double x[], int n)
 int main()
 {
   double start[] = {-1.2,1.0};
-  double start_null[2];
+  double start_null[] = {0.0, 0.0};
   double min;
   int i;
 
