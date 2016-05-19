@@ -45,7 +45,7 @@ void my_constraints(double x[], int n)
 int main()
 {
   double start[] = {-1.2,1.0};
-  double start_null[] = {0.0, 0.0};
+  double start_null[2];
   double min;
   int i;
 
