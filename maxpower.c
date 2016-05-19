@@ -43,15 +43,19 @@ double objfun(double x[])
   Req = 470*RL/(470+RL);
   VL = Vs*Req/(1000+Req);
   PL = VL*VL/RL;
-  printf("RL:%f P:%f\n",RL,PL);
+  /*printf("RL:%f P:%f\n",RL,PL);*/
   return -PL; /* nm finds the minimum, so to find the max we return the negative value */
 }
  
 void my_constraints(double x[], int n)
 {
-  // resistance must be positive
+  // resistance must be positive and not equal to zero
   int i;
+
   for (i=0; i<n; i++) {
+    /*if (x[i] < 1.0) {
+      x[i] = 1 + i*50;
+      }*/
     if (x[i] < 0) {
       x[i] = fabs(x[i]);
     }
@@ -70,7 +74,7 @@ int main()
   min=simplex(objfun,start,dim,eps,scale,my_constraints);
 
   for (i=0; i<dim; i++) {
-    printf("%f:%f\n",start[i],min);
+    printf("%0.2f ohms, %f watts\n",start[i],fabs(min));
   }
   return 0;
 }

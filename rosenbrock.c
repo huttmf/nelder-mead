@@ -52,7 +52,7 @@ int main()
   for (i=0;i<2;i++) {
     printf("%0.2f, ",start[i]);
   }
-  printf("value %0.2f\n",min);
+  printf("value %0.2f\n\n",min);
 
   /* 
      use default starting point of:

@@ -41,10 +41,12 @@ ohms. The source code for this problem can be found here. The program
 produces the following output starting with an initial guess of RL=100
 ohms:
 
-	RL:320.000000 P:0.006474
+	Initial Values
+	100.00, value -0.00
+	101.00, value -0.00
 	29 Function Evaluations
 	13 Iterations through program
-
+	320.00 ohms, 0.006474 watts
 
 
 ## Motivation
@@ -54,8 +56,17 @@ useful for non-linear optimization problems. I was researching
 optimization of antenna arrarys at one point and implemented several
 versions of the Nelder-Mead algorithm.
 
-Reference for the creation of the initial simplex.
+Reference for the creation of the initial simplex.  
 D. J. Wilde and C. S. Beightler, Foundations of Optimization. Englewood Cliffs, N.J., Prentice-Hall, 1967, p. 319
+
+The pn,qn values used to create the initial simplex are defined by
+(Spendly, Hext, and Himsworth). This creates a simplex with unit edges
+between all vertices. Some implementations just form the initial
+simplex by taking a step in each direction. Since we're talking about
+non-linear optimization, every case will be different. For my
+applications, concerning antenna array optimization, the initial
+simplex with unit edges seems to give the best results. Although it
+does have to be scaled at times depending on the problem.
 
 ## Installation
 
