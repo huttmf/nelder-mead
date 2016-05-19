@@ -2,41 +2,13 @@
  * Program: nmsimplex.c
  * Author : Michael F. Hutt
  * http://www.mikehutt.com
- * 11/3/97
+ * Nov. 3, 1997
  *
  * An implementation of the Nelder-Mead simplex method.
  *
- * Copyright (c) 1997-present <Michael F. Hutt>
+ * Copyright (c) 1997-present Michael F. Hutt
+ * Released under the MIT License
  *
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the
- * "Software"), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to
- * the following conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
- * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
- * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- *
- *
- * Jan. 6, 1999 
- * Modified to conform to the algorithm presented
- * in Margaret H. Wright's paper on Direct Search Methods.
- *
- * Jul. 23, 2007
- * Fixed memory leak.
- *
- * Mar. 1, 2011
- * Added constraints.
  */
 
 #include "nmsimplex.h"
@@ -230,6 +202,7 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
 		
     /* calculate the centroid */
     centroid(vm,v,n,vg);
+
     /* reflect vg to new vertex vr */
     for (j=0;j<=n-1;j++) {
       /*vr[j] = (1+ALPHA)*vm[j] - ALPHA*v[vg][j];*/
@@ -260,9 +233,11 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
       fe = objfunc(ve);
       k++;
 			
-      /* by making fe < fr as opposed to fe < f[vs], 			   
+      /* 
+	 by making fe < fr as opposed to fe < f[vs], 			   
 	 Rosenbrocks function takes 63 iterations as opposed 
-	 to 64 when using double variables. */
+	 to 64 when using double variables. 
+      */
 			
       if (fe < fr) {
 	for (j=0;j<=n-1;j++) {
@@ -312,15 +287,15 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
 	}
 	f[vg] = fc;
       }
-      /* at this point the contraction is not successful,
-	 we must halve the distance from vs to all the 
-	 vertices of the simplex and then continue.
-	 10/31/97 - modified to account for ALL vertices. 
-      */
+
       else {
-#ifdef DEBUG
-	printf("DEBUG: contraction not successful\n");
-#endif
+	/* 
+	   at this point the contraction is not successful,
+	   we must halve the distance from vs to all the 
+	   vertices of the simplex and then continue.
+	   1997-10-31 - modified to account for ALL vertices. 
+	*/
+	
 	for (row=0;row<=n;row++) {
 	  if (row != vs) {
 	    for (j=0;j<=n-1;j++) {
@@ -329,33 +304,20 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
 	  }
 	}
 
-	/*
-	  for (j=0;j<=n;j++) {
+	/* re-evaluate all the vertices */
+	for (j=0;j<=n;j++) {
 	  f[j] = objfunc(v[j]);
-	  }
+	}
+	
+	/* find the index of the largest value */
+	vg = vg_index(f,0,n);
+	
+	/* find the index of the smallest value */
+	vs = vs_index(f,0,n);
+	
+	/* find the index of the second largest value */
+	vh = vh_index(f,vs,vg,n);
 
-	  vg=0;
-	  for (j=0;j<=n;j++) {
-	  if (f[j] > f[vg]) {
-	  vg = j;
-	  }
-	  }
-	
-	  vs=0;
-	  for (j=0;j<=n;j++) {
-	  if (f[j] < f[vs]) {
-	  vs = j;
-	  }
-	  }
-	
-	  vh=vs;
-	  for (j=0;j<=n;j++) {
-	  if (f[j] > f[vh] && f[j] < f[vg]) {
-	  vh = j;
-	  }
-	  }
-	*/
-	
 	if (constrain != NULL) {
           constrain(v[vg],n);
         }
@@ -390,12 +352,7 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
   /* end main loop of the minimization */
 	
   /* find the index of the smallest value */
-  vs=0;
-  for (j=0;j<=n;j++) {
-    if (f[j] < f[vs]) {
-      vs = j;
-    }
-  }
+  vs = vs_index(f,0,n);
 	
   printf("The minimum was found at\n"); 
   for (j=0;j<n;j++) {
