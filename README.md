@@ -49,6 +49,6 @@ make
 
 ## License
 
-Copyright (c) 1999-present Michael F. Hutt  
+Copyright (c) 1997-present Michael F. Hutt  
 Released under the MIT License
 
