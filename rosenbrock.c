@@ -22,7 +22,7 @@ double round2(double num, int precision)
   double rnum = 0.0;
   int tnum;
 
-  if (num == 0)
+  if (num == 0.0)
     return num;
 
   rnum = num*pow(10,precision);
