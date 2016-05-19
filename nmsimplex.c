@@ -37,6 +37,9 @@
  *
  * Mar. 1, 2011
  * Added constraints.
+ *
+ * May 18, 2016
+ * Re-evaluate all vertices after an unsuccessful contraction.
  */
 
 #include "nmsimplex.h"
@@ -332,7 +335,7 @@ double simplex(double (*objfunc)(double[]), double start[],int n, double EPSILON
 	  }
 	}
 
-	/* reveluate all the vertices */
+	/* re-evaluate all the vertices */
 	for (j=0;j<=n;j++) {
 	  f[j] = objfunc(v[j]);
 	}
