@@ -25,6 +25,7 @@ void initialize_simplex(double **v, double start[], double scale, int n)
   if (start == NULL) {
     /* assume one of the vertices is 0,0 */
     for (i=0;i<n;i++) {
+      start[i] = 0.0;
       v[0][i] = 0.0;
     }
 	
