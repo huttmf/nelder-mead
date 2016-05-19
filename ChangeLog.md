@@ -11,3 +11,6 @@
 ### 1999-01-06
 	* Modified to conform to the algorithm presented in Margaret H. Wright's paper on Direct Search Methods.
 
+### 1997-11-03
+	* Initial build.
+
