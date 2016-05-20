@@ -47,9 +47,9 @@ void print_initial_simplex(double **v, double *f, int n)
   printf("Initial Values\n");
   for (j=0;j<=n;j++) {
     for (i=0;i<n;i++) {
-      printf("%0.2f, ",v[j][i]);
+      printf("%f, ",v[j][i]);
     }
-    printf("value %0.2f\n",f[j]);
+    printf("value %f\n",f[j]);
   }
 }
 
