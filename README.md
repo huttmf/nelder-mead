@@ -11,6 +11,8 @@ The rosenbrock example evaluates the Rosenbrock function.
 
 In the first case a starting point of (-1.2,1.0) was specified.
 
+![alt text](http://www.mikehutt.com/images/simplex.png "Initial Simplex")
+
     Initial Values
     -1.20, 1.00, value 24.20
     -0.23, 1.26, value 147.22
