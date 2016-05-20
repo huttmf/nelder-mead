@@ -7,7 +7,7 @@ Version 1.1
 
 See rosenbrock and maxpower.
 
-The rosenbrock example evaluates the Rosenbrock function.
+The rosenbrock example finds the minimum for the Rosenbrock function.
 
 In the first case a starting point of (-1.2,1.0) was specified.
 
