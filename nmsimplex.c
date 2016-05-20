@@ -6,7 +6,7 @@
  *
  * An implementation of the Nelder-Mead simplex method.
  *
- * Copyright (c) 1997-present Michael F. Hutt
+ * Copyright (c) 1997 Michael F. Hutt
  * Released under the MIT License
  *
  */

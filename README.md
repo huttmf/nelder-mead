@@ -79,6 +79,5 @@ make
 
 ## License
 
-Copyright (c) 1997-present Michael F. Hutt  
-Released under the MIT License
+Copyright (c) 1997 Michael F. Hutt, Released under the MIT License
 
