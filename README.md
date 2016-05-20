@@ -46,8 +46,8 @@ produces the following output starting with an initial guess of RL=100
 ohms:
 
 	Initial Values
-	100.00, value -0.00
-	101.00, value -0.00
+	100.000000, value -0.004700
+	101.000000, value -0.004725
 	29 Function Evaluations
 	13 Iterations through program
 	320.00 ohms, 0.006474 watts
